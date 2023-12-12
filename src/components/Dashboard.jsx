@@ -1,31 +1,32 @@
 import Dropdown from 'react-bootstrap/Dropdown';
 import Card from 'react-bootstrap/Card';
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useContext} from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import axios from 'axios';
+
+import {DishesContext, UserContext} from '../App';
 
 export const Dashboard = () => {
-  const [dishes, setDishes] = useState([]);
+  const {users} = useContext(UserContext);
+  const {dishes} = useContext(DishesContext);
+
   const [dishRankInfo, setDishRankInfo] = useState([]);
-  const [points, setPoints] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          'https://raw.githubusercontent.com/syook/react-dishpoll/main/db.json'
-        );
-        setDishes(response.data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
+    (async () => {
+      const userObj = JSON.parse(localStorage.getItem('user'));
 
-    fetchData();
+      const storedDishRankInfo = await JSON.parse(
+        localStorage.getItem(userObj.username)
+      );
+      if (storedDishRankInfo) {
+        setDishRankInfo(storedDishRankInfo);
+      }
+    })();
   }, []);
 
+  console.log(dishes.dishesList);
   const rankPoints = {
     1: {rank: 1, points: 30},
     2: {rank: 2, points: 20},
@@ -50,16 +51,18 @@ export const Dashboard = () => {
             (info) => info.rank !== rankObj.rank
           );
         }
-
         updatedInfo.push(rankObj);
       }
-      setPoints(updatedInfo);
+
       return updatedInfo;
     });
   };
 
   const handleSave = () => {
-    console.log(points);
+    localStorage.setItem(
+      `${JSON.parse(users.user).username}`,
+      JSON.stringify(dishRankInfo)
+    );
   };
 
   return (
@@ -67,7 +70,7 @@ export const Dashboard = () => {
       <h1>Dashboard</h1>
       <button onClick={handleSave}>Save</button>
       <Row>
-        {dishes.map((dish) => (
+        {dishes?.dishesList?.map((dish) => (
           <Col key={dish.id} xs={12} md={6} lg={4}>
             <Card style={{width: '18rem', marginBottom: '20px'}}>
               <Card.Img variant="top" src={dish.image} />

@@ -6,13 +6,12 @@ import {Ranking} from './components/Ranking';
 import {createContext, useEffect, useReducer} from 'react';
 import {userReducers} from './Reducer/usersReducer';
 import {dishesReducer} from './Reducer/disheshReducer';
+import axios from 'axios';
 export const UserContext = createContext();
 export const DishesContext = createContext();
 function App() {
   const [users, usersDispatch] = useReducer(userReducers, {
     user: {},
-    rank: {id: '', rank1: '', rank2: '', rank3: ''},
-    ranks: [],
   });
   const [dishes, dishesDispatch] = useReducer(dishesReducer, {
     dishesList: [],
@@ -26,17 +25,26 @@ function App() {
 
   useEffect(() => {
     if (localStorage.getItem('user')) {
+      (async () => {
+        try {
+          const response = await axios.get(
+            'https://raw.githubusercontent.com/syook/react-dishpoll/main/db.json'
+          );
+          dishesDispatch({
+            type: 'SET_DISHES',
+            payload: response.data,
+          });
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      })();
       usersDispatch({
         type: 'SET_USER',
         payload: localStorage.getItem('user'),
       });
-      dishesDispatch({
-        type: 'SET_DISHES',
-        payload: localStorage.getItem('dishes'),
-      });
     }
   }, []);
-  // console.log(localStorage.getItem('dishes'));
+
   return (
     <UserContext.Provider value={{users, usersDispatch}}>
       <DishesContext.Provider value={{dishes, dishesDispatch}}>

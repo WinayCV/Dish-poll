@@ -1,8 +1,5 @@
 export const userReducers = (state, action) => {
   switch (action.type) {
-    case 'SET_RANKS': {
-      return {...state, ranks: action.payload};
-    }
     case 'RESET_USER': {
       return {...state, user: {}};
     }

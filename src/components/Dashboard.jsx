@@ -1,70 +1,70 @@
 import Dropdown from 'react-bootstrap/Dropdown';
 import Card from 'react-bootstrap/Card';
-import {useEffect, useState} from 'react';
+import {useState, useEffect} from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import axios from 'axios';
 
 export const Dashboard = () => {
-  const user = JSON.parse(localStorage.getItem('user'));
-  const storedDishes =
-    JSON.parse(localStorage.getItem('dishes')) || [];
-  const [dishes, setDishes] = useState(storedDishes);
-  const [selectedRanks, setSelectedRanks] = useState({});
+  const [dishes, setDishes] = useState([]);
+  const [dishRankInfo, setDishRankInfo] = useState([]);
+  const [points, setPoints] = useState([]);
 
   useEffect(() => {
-    if (!storedDishes.length) {
-      (async () => {
-        try {
-          const response = await axios.get(
-            'https://raw.githubusercontent.com/syook/react-dishpoll/main/db.json'
-          );
-          localStorage.setItem(
-            'dishes',
-            JSON.stringify(response.data)
-          );
-          setDishes(response.data);
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      })();
-    }
-  }, [storedDishes.length]);
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          'https://raw.githubusercontent.com/syook/react-dishpoll/main/db.json'
+        );
+        setDishes(response.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const rankPoints = {
+    1: {rank: 1, points: 30},
+    2: {rank: 2, points: 20},
+    3: {rank: 3, points: 10},
+  };
 
   const handleRankSelect = (dishId, rank) => {
-    if (rank === 'none' || selectedRanks[dishId] === rank) {
-      const updatedDishes = dishes.map((dish) =>
-        dish.id === dishId ? {...dish, rank: undefined} : dish
+    setDishRankInfo((prevInfo) => {
+      let updatedInfo = prevInfo.filter(
+        (info) => info.dishId !== dishId
       );
-      setDishes(updatedDishes);
-      setSelectedRanks({...selectedRanks, [dishId]: undefined});
-      localStorage.setItem('dishes', JSON.stringify(updatedDishes));
-    } else if (!selectedRanks[dishId]) {
-      const updatedDishes = dishes.map((dish) =>
-        dish.id === dishId ? {...dish, rank: rank} : dish
-      );
-      setDishes(updatedDishes);
-      setSelectedRanks({...selectedRanks, [dishId]: rank});
-      localStorage.setItem('dishes', JSON.stringify(updatedDishes));
-    } else {
-      alert(`Rank ${rank} is already assigned to another dish.`);
-    }
-  };
-  const handleSave = () => {
-    dishes.forEach((dish) => {
-      const dishId = dish.id;
-      const rank = dish.rank;
-      if (rank) {
-        console.log(rank, dishId);
+
+      if (rank !== 'none') {
+        const rankObj = {
+          dishId,
+          rank: rankPoints[rank].rank,
+          points: rankPoints[rank].points,
+        };
+
+        if (prevInfo.find((info) => info.rank === rankObj.rank)) {
+          updatedInfo = updatedInfo.filter(
+            (info) => info.rank !== rankObj.rank
+          );
+        }
+
+        updatedInfo.push(rankObj);
       }
+      setPoints(updatedInfo);
+      return updatedInfo;
     });
+  };
+
+  const handleSave = () => {
+    console.log(points);
   };
 
   return (
     <Container>
       <h1>Dashboard</h1>
-      <h2>Welcome {user && user.username}!</h2>
       <button onClick={handleSave}>Save</button>
       <Row>
         {dishes.map((dish) => (
@@ -82,7 +82,15 @@ export const Dashboard = () => {
                     variant="success"
                     id={`dropdown-${dish.id}`}
                   >
-                    {dish.rank ? `Rank ${dish.rank}` : 'No Rank'}
+                    {dishRankInfo.find(
+                      (info) => info.dishId === dish.id
+                    )
+                      ? `Rank ${
+                          dishRankInfo.find(
+                            (info) => info.dishId === dish.id
+                          ).rank
+                        }`
+                      : 'No Rank'}
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
                     <Dropdown.Item eventKey="none">

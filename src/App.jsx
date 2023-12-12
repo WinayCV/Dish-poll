@@ -36,7 +36,7 @@ function App() {
       });
     }
   }, []);
-  console.log(localStorage.getItem('dishes'));
+  // console.log(localStorage.getItem('dishes'));
   return (
     <UserContext.Provider value={{users, usersDispatch}}>
       <DishesContext.Provider value={{dishes, dishesDispatch}}>

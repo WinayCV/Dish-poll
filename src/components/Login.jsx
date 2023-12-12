@@ -53,47 +53,52 @@ export const Login = () => {
     }
   };
   return (
-    <div>
-      <h1>Login</h1>
-      <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
-            type="username"
-            placeholder="Enter user Name"
-            name="userName"
-            onChange={handleChange}
-            value={form.userName}
-          />
-          <span>
-            {errors.userName && (
-              <p style={{color: 'red'}}>{errors.userName}</p>
-            )}
-          </span>
-          <Form.Text className="text-muted">
-            We'll never share your email with anyone else.
-          </Form.Text>
-        </Form.Group>
+    <div className="container mt-5">
+      <div className="row justify-content-center">
+        <div className="col-md-6">
+          <h1 className="text-center mb-4">Login</h1>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control
+                type="username"
+                placeholder="Enter Username"
+                name="userName"
+                onChange={handleChange}
+                value={form.userName}
+              />
+              {errors.userName && (
+                <Form.Text className="text-danger">
+                  {errors.userName}
+                </Form.Text>
+              )}
+            </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Password"
-            name="password"
-            value={form.password}
-            onChange={handleChange}
-          />
-        </Form.Group>
-        <span>
-          {errors.password && (
-            <p style={{color: 'red'}}>{errors.password}</p>
-          )}
-        </span>
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
-      </Form>
+            <Form.Group
+              className="mb-3"
+              controlId="formBasicPassword"
+            >
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Password"
+                name="password"
+                value={form.password}
+                onChange={handleChange}
+              />
+              {errors.password && (
+                <Form.Text className="text-danger">
+                  {errors.password}
+                </Form.Text>
+              )}
+            </Form.Group>
+
+            <Button variant="primary" type="submit" className="w-100">
+              Submit
+            </Button>
+          </Form>
+        </div>
+      </div>
     </div>
   );
 };

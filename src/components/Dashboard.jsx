@@ -70,8 +70,8 @@ export const Dashboard = () => {
   return (
     <Container>
       <div className="d-flex flex-column align-items-center">
-        <h1 className="text-center">Dashboard</h1>
-        <Button onClick={handleSave} className="w-50">
+        <h1 className="text-center mt-2">Dashboard</h1>
+        <Button onClick={handleSave} className="w-50 mb-5">
           Save
         </Button>
       </div>

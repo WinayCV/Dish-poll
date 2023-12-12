@@ -76,29 +76,31 @@ export const Ranking = () => {
 
   return (
     <div>
-      <h1>Ranking</h1>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>SL NO</th>
-            <th>Title</th>
-            <th>Points</th>
-            <th>My choice</th>
-          </tr>
-        </thead>
-        <tbody>
-          {newDishesList?.map((dish, i) => {
-            return (
-              <tr key={dish.id}>
-                <td>{i + 1}</td>
-                <td>{dish.dishName}</td>
-                <td>{dish.points}</td>
-                <td>{dish.choice}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </Table>
+      <h1 className="text-center mt-3">Ranking</h1>
+      <div className="pt-3 p-5">
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>SL NO</th>
+              <th>Title</th>
+              <th>Points</th>
+              <th>My choice</th>
+            </tr>
+          </thead>
+          <tbody>
+            {newDishesList?.map((dish, i) => {
+              return (
+                <tr key={dish.id}>
+                  <td>{i + 1}</td>
+                  <td>{dish.dishName}</td>
+                  <td>{dish.points}</td>
+                  <td>{dish.choice}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
+      </div>
     </div>
   );
 };

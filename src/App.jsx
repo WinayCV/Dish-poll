@@ -1,13 +1,12 @@
-import './App.css';
-import {Route, Link, Routes, useNavigate} from 'react-router-dom';
-import {Login} from './components/Login';
-import {Dashboard} from './components/Dashboard';
-import {Ranking} from './components/Ranking';
-import {createContext, useEffect, useReducer} from 'react';
-import {userReducers} from './Reducer/usersReducer';
-import {dishesReducer} from './Reducer/disheshReducer';
 import axios from 'axios';
+import {createContext, useEffect, useReducer} from 'react';
+import {Route, Routes} from 'react-router-dom';
+import {dishesReducer} from './Reducer/disheshReducer';
+import {userReducers} from './Reducer/usersReducer';
+import {Dashboard} from './components/Dashboard';
+import {Login} from './components/Login';
 import {NavBar} from './components/Navbar';
+import {Ranking} from './components/Ranking';
 export const UserContext = createContext();
 export const DishesContext = createContext();
 function App() {

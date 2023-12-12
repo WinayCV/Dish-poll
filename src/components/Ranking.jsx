@@ -12,7 +12,7 @@ export const Ranking = () => {
   const user = JSON.parse(
     localStorage.getItem(`${users?.user?.username}`)
   );
-  console.log(user);
+
   userInfo.map((user) => {
     userList.push(user.username);
   });
@@ -33,7 +33,6 @@ export const Ranking = () => {
     .map((dish) => {
       const points = combinedPoints[dish.id] || 0;
       const choice = user?.find((ele) => ele.dishId === dish.id);
-      console.log(choice);
       return {
         ...dish,
         points,
@@ -75,7 +74,6 @@ export const Ranking = () => {
     })
     .sort((a, b) => b.points - a.points);
 
-  console.log(newDishesList);
   return (
     <div>
       <h1>Ranking</h1>

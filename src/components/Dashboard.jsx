@@ -1,9 +1,12 @@
-import Dropdown from 'react-bootstrap/Dropdown';
-import Card from 'react-bootstrap/Card';
-import {useState, useEffect, useContext} from 'react';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import {useContext, useEffect, useState} from 'react';
+import {
+  Button,
+  Container,
+  Dropdown,
+  Card,
+  Col,
+  Row,
+} from 'react-bootstrap';
 
 import {DishesContext, UserContext} from '../App';
 
@@ -26,7 +29,6 @@ export const Dashboard = () => {
     })();
   }, []);
 
-  console.log(dishes.dishesList);
   const rankPoints = {
     1: {rank: 1, points: 30},
     2: {rank: 2, points: 20},
@@ -67,8 +69,13 @@ export const Dashboard = () => {
 
   return (
     <Container>
-      <h1>Dashboard</h1>
-      <button onClick={handleSave}>Save</button>
+      <div className="d-flex flex-column align-items-center">
+        <h1 className="text-center">Dashboard</h1>
+        <Button onClick={handleSave} className="w-50">
+          Save
+        </Button>
+      </div>
+
       <Row>
         {dishes?.dishesList?.map((dish) => (
           <Col key={dish.id} xs={12} md={6} lg={4}>
@@ -104,6 +111,9 @@ export const Dashboard = () => {
                     <Dropdown.Item eventKey="3">Rank 3</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
+                <Card.Text title={dish.description}>
+                  {dish.description.slice(0, 50) + '...'}
+                </Card.Text>
               </Card.Body>
             </Card>
           </Col>

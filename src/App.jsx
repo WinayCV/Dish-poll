@@ -7,6 +7,7 @@ import {createContext, useEffect, useReducer} from 'react';
 import {userReducers} from './Reducer/usersReducer';
 import {dishesReducer} from './Reducer/disheshReducer';
 import axios from 'axios';
+import {NavBar} from './components/Navbar';
 export const UserContext = createContext();
 export const DishesContext = createContext();
 function App() {
@@ -16,12 +17,6 @@ function App() {
   const [dishes, dishesDispatch] = useReducer(dishesReducer, {
     dishesList: [],
   });
-  const navigate = useNavigate();
-  const handleLogot = () => {
-    localStorage.removeItem('user');
-    usersDispatch({type: 'RESET_USER'});
-    navigate('/');
-  };
 
   useEffect(() => {
     if (localStorage.getItem('user')) {
@@ -49,29 +44,8 @@ function App() {
     <UserContext.Provider value={{users, usersDispatch}}>
       <DishesContext.Provider value={{dishes, dishesDispatch}}>
         <div>
-          <h1>React dish poll</h1>
-          <nav>
-            <ul>
-              {localStorage.getItem('user') ? (
-                <li>
-                  <Link to="/" onClick={handleLogot}>
-                    Logout
-                  </Link>
-                </li>
-              ) : (
-                <li>
-                  <Link to="/">Login</Link>
-                </li>
-              )}
+          <NavBar />
 
-              <li>
-                <Link to="/dashboard">Dashboard</Link>
-              </li>
-              <li>
-                <Link to="/result">Ranking</Link>
-              </li>
-            </ul>
-          </nav>
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/dashboard" element={<Dashboard />} />

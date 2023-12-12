@@ -2,10 +2,12 @@ import {useState} from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import {users} from '../userInfo/userInfo';
+import {useNavigate} from 'react-router-dom';
 
 export const Login = () => {
   const [form, setForm] = useState({userName: '', password: ''});
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
   const handleChange = (e) => {
     setForm({...form, [e.target.name]: e.target.value});
   };
@@ -38,8 +40,8 @@ export const Login = () => {
         newErrors.userName = 'Invalid user name or password';
         setErrors(newErrors);
       } else {
-        console.log(user);
-        localStorage.setItem('user', user);
+        localStorage.setItem('user', JSON.stringify(user));
+        navigate('/dashboard');
         setErrors('');
       }
     }

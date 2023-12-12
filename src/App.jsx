@@ -9,13 +9,17 @@ import {dishesReducer} from './Reducer/disheshReducer';
 export const UserContext = createContext();
 export const DishesContext = createContext();
 function App() {
-  const [users, usersDispatch] = useReducer(userReducers, {user: {}});
+  const [users, usersDispatch] = useReducer(userReducers, {
+    user: {},
+    rank: {id: '', rank1: '', rank2: '', rank3: ''},
+    ranks: [],
+  });
   const [dishes, dishesDispatch] = useReducer(dishesReducer, {
     dishesList: [],
   });
   const navigate = useNavigate();
   const handleLogot = () => {
-    localStorage.clear();
+    localStorage.removeItem('user');
     usersDispatch({type: 'RESET_USER'});
     navigate('/');
   };
@@ -26,9 +30,13 @@ function App() {
         type: 'SET_USER',
         payload: localStorage.getItem('user'),
       });
+      dishesDispatch({
+        type: 'SET_DISHES',
+        payload: localStorage.getItem('dishes'),
+      });
     }
   }, []);
-  console.log(users);
+  console.log(localStorage.getItem('dishes'));
   return (
     <UserContext.Provider value={{users, usersDispatch}}>
       <DishesContext.Provider value={{dishes, dishesDispatch}}>

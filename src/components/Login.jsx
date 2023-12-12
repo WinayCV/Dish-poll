@@ -45,6 +45,12 @@ export const Login = () => {
       } else {
         const userInfo = JSON.stringify(user);
         localStorage.setItem('user', userInfo);
+        if (localStorage.getItem('ranks')) {
+          usersDispatch({
+            type: 'SET_RANKS',
+            payload: localStorage.getItem('ranks'),
+          });
+        }
         usersDispatch({type: 'SET_USER', payload: userInfo});
         navigate('/dashboard');
         setErrors('');

@@ -40,7 +40,7 @@ function App() {
       })();
       usersDispatch({
         type: 'SET_USER',
-        payload: localStorage.getItem('user'),
+        payload: JSON.parse(localStorage.getItem('user')),
       });
     }
   }, []);

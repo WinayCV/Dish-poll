@@ -60,7 +60,7 @@ export const Dashboard = () => {
 
   const handleSave = () => {
     localStorage.setItem(
-      `${JSON.parse(users.user).username}`,
+      `${users.user.username}`,
       JSON.stringify(dishRankInfo)
     );
   };

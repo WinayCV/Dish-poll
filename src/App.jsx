@@ -3,16 +3,27 @@ import {Route, Link, Routes, useNavigate} from 'react-router-dom';
 import {Login} from './components/Login';
 import {Dashboard} from './components/Dashboard';
 import {Ranking} from './components/Ranking';
-import {createContext, useReducer} from 'react';
+import {createContext, useEffect, useReducer} from 'react';
 import {userReducers} from './Reducer/usersReducer';
 export const UserContext = createContext();
 function App() {
-  const [users, usersDispatch] = useReducer(userReducers, {});
+  const [users, usersDispatch] = useReducer(userReducers, {user: {}});
   const navigate = useNavigate();
   const handleLogot = () => {
     localStorage.clear();
+    usersDispatch({type: 'RESET_USER'});
     navigate('/');
   };
+
+  useEffect(() => {
+    if (localStorage.getItem('user')) {
+      usersDispatch({
+        type: 'SET_USER',
+        payload: localStorage.getItem('user'),
+      });
+    }
+  }, []);
+  console.log(users);
   return (
     <UserContext.Provider value={{users, usersDispatch}}>
       <div>

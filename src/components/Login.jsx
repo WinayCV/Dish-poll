@@ -1,13 +1,16 @@
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import {users} from '../userInfo/userInfo';
 import {useNavigate} from 'react-router-dom';
+import {UserContext} from '../App';
 
 export const Login = () => {
+  const {usersDispatch} = useContext(UserContext);
   const [form, setForm] = useState({userName: '', password: ''});
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+
   const handleChange = (e) => {
     setForm({...form, [e.target.name]: e.target.value});
   };
@@ -40,7 +43,9 @@ export const Login = () => {
         newErrors.userName = 'Invalid user name or password';
         setErrors(newErrors);
       } else {
-        localStorage.setItem('user', JSON.stringify(user));
+        const userInfo = JSON.stringify(user);
+        localStorage.setItem('user', userInfo);
+        usersDispatch({type: 'SET_USER', payload: userInfo});
         navigate('/dashboard');
         setErrors('');
       }

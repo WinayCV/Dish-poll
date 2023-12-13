@@ -1,6 +1,6 @@
 # Dish Polling App
 
-Make a small react app for ranking dishes. Multiple users should be able to login into the app and vote for their favourite dishes and see the results of the poll.
+A small react app for ranking dishes. Multiple users should be able to login into the app and vote for their favourite dishes and see the results of the poll.
 
 ## Table of Contents
 
@@ -25,12 +25,14 @@ The key functionalities of the project.
 
 ### Login page
 
-User can login with valid credintials and form errors have been taken care
+Users can securely log in using valid credentials, while the system handles any form errors that might occur.
 
 ### Dashboard page
+
+Within the dashboard, users have the ability to rank their preferred dishes and save any modifications made.
 ### Ranking page
 
-
+Dishes are sorted in descending order based on accumulated points. Users can easily view their selected dishes within this ranking system.
 
 ## Getting Started
 Follow the instruction to get the App running on you're local system.

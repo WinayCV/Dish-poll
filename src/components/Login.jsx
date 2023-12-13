@@ -5,9 +5,6 @@ import {users} from '../userInfo/userInfo';
 import {useNavigate} from 'react-router-dom';
 import {DishesContext, UserContext} from '../App';
 import axios from 'axios';
-// import 'react-toastify/dist/ReactToastify.css';
-
-import {ToastContainer, toast} from 'react-toastify';
 
 export const Login = () => {
   const {usersDispatch} = useContext(UserContext);
@@ -52,10 +49,6 @@ export const Login = () => {
         setErrors(newErrors);
       } else {
         const userInfo = {id: user.id, username: user.username};
-        console.log('object');
-        toast.success('Welcome ${user.username', {
-          position: toast.POSITION.TOP_CENTER,
-        });
         const userInfoString = JSON.stringify(userInfo);
         localStorage.setItem('user', userInfoString);
         try {
@@ -84,7 +77,6 @@ export const Login = () => {
       <div className="row justify-content-center">
         <div className="col-md-6">
           <h1 className="text-center mb-4">Login</h1>
-          <ToastContainer />
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>User Name</Form.Label>

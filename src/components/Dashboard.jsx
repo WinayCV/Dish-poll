@@ -79,6 +79,7 @@ export const Dashboard = () => {
       <ToastContainer />
       <div className="d-flex flex-column align-items-center">
         <h1 className="text-center mt-2">Dashboard</h1>
+        <p>Welcome {users.user.username}</p>
         <Button onClick={handleSave} className="w-50 mb-5">
           Save
         </Button>

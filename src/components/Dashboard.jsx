@@ -9,8 +9,8 @@ import {
 } from 'react-bootstrap';
 import 'react-toastify/dist/ReactToastify.css';
 
-import {DishesContext, UserContext} from '../App';
 import {ToastContainer, toast} from 'react-toastify';
+import {DishesContext, UserContext} from '../App';
 
 export const Dashboard = () => {
   const {users} = useContext(UserContext);

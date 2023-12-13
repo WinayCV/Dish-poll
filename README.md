@@ -15,20 +15,25 @@ Make a small react app for ranking dishes. Multiple users should be able to logi
 
 ## About
 
-Briefly describe what the project is about. Include its purpose, main features, and any other relevant information.
+The application aims to rank dishes based on user preferences, assigning them positions in ranks 1, 2, or 3. These ranks correspond to different point values, where rank 1 holds 30 points, rank 2 carries 20 points, and rank 3 corresponds to 10 points.
+
+Users can interact with the dishes and assign their preferences, which are then reflected in the ranking tab. Additionally, users have the ability to view and manage their choices within the dashboard.
 
 ## Features
 
-List some key features or functionalities of the project. You can include bullet points or a short description of each feature.
+The key functionalities of the project.
 
-- Feature 1
-- Feature 2
-- Feature 3
+### Login page
+
+User can login with valid credintials and form errors have been taken care
+
+### Dashboard page
+### Ranking page
+
+
 
 ## Getting Started
-
-Include instructions on how to get the project up and running on a local machine. Include steps like installation and running the project.
-
+Follow the instruction to get the App running on you're local system.
 
 ### Installation
 

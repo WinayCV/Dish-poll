@@ -29,7 +29,7 @@ function App() {
             type: 'SET_DISHES',
             payload: response.data,
           });
-          console.log(response.status);
+
           if (response.status !== 200) {
             navigate('/error');
           } else {

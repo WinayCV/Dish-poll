@@ -7,15 +7,17 @@ import {
   Col,
   Row,
 } from 'react-bootstrap';
+import 'react-toastify/dist/ReactToastify.css';
 
 import {DishesContext, UserContext} from '../App';
+import {ToastContainer, toast} from 'react-toastify';
 
 export const Dashboard = () => {
   const {users} = useContext(UserContext);
   const {dishes} = useContext(DishesContext);
 
   const [dishRankInfo, setDishRankInfo] = useState([]);
-  console.log(users);
+
   useEffect(() => {
     (async () => {
       const userObj = JSON.parse(localStorage.getItem('user'));
@@ -61,17 +63,20 @@ export const Dashboard = () => {
   };
 
   const handleSave = () => {
-    console.log('object', users.user.username);
     if (users.user.username) {
       localStorage.setItem(
         `${users.user.username}`,
         JSON.stringify(dishRankInfo)
       );
+      toast.success('Rank saved sucessfully', {
+        position: toast.POSITION.TOP_CENTER,
+      });
     }
   };
 
   return (
     <Container>
+      <ToastContainer />
       <div className="d-flex flex-column align-items-center">
         <h1 className="text-center mt-2">Dashboard</h1>
         <Button onClick={handleSave} className="w-50 mb-5">

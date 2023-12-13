@@ -11,10 +11,12 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import {ToastContainer, toast} from 'react-toastify';
 import {DishesContext, UserContext} from '../App';
+import {useNavigate} from 'react-router-dom';
 
 export const Dashboard = () => {
   const {users} = useContext(UserContext);
   const {dishes} = useContext(DishesContext);
+  const navigate = useNavigate();
 
   const [dishRankInfo, setDishRankInfo] = useState([]);
 

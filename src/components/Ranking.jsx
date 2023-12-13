@@ -82,6 +82,7 @@ export const Ranking = () => {
   return (
     <div>
       <h1 className="text-center mt-3">Ranking</h1>
+
       <div className="pt-3 p-5">
         <Table striped bordered hover>
           <thead>

@@ -50,3 +50,7 @@ cd Dish-poll
 
 # Install dependencies
 npm install   # or yarn install
+
+# Run App
+
+npm run dev

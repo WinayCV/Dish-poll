@@ -1,12 +1,13 @@
 import axios from 'axios';
 import {createContext, useEffect, useReducer} from 'react';
-import {Route, Routes} from 'react-router-dom';
+import {Route, Routes, useNavigate} from 'react-router-dom';
 import {dishesReducer} from './Reducer/disheshReducer';
 import {userReducers} from './Reducer/usersReducer';
 import {Dashboard} from './components/Dashboard';
 import {Login} from './components/Login';
 import {NavBar} from './components/Navbar';
 import {Ranking} from './components/Ranking';
+import {NetworkError} from './components/NetworkError';
 export const UserContext = createContext();
 export const DishesContext = createContext();
 function App() {
@@ -16,7 +17,7 @@ function App() {
   const [dishes, dishesDispatch] = useReducer(dishesReducer, {
     dishesList: [],
   });
-
+  const navigate = useNavigate();
   useEffect(() => {
     if (localStorage.getItem('user')) {
       (async () => {
@@ -28,8 +29,15 @@ function App() {
             type: 'SET_DISHES',
             payload: response.data,
           });
+          console.log(response.status);
+          if (response.status !== 200) {
+            navigate('/error');
+          } else {
+            navigate('/dashboard');
+          }
         } catch (error) {
           console.error('Error fetching data:', error);
+          navigate('/error');
         }
       })();
       usersDispatch({
@@ -49,6 +57,7 @@ function App() {
             <Route path="/" element={<Login />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/result" element={<Ranking />} />
+            <Route path="/error" element={<NetworkError />} />
           </Routes>
         </div>
       </DishesContext.Provider>

@@ -31,9 +31,14 @@ export const NavBar = () => {
               </Nav.Link>
             </div>
           ) : (
-            <Nav.Link as={Link} to="/">
-              Login
-            </Nav.Link>
+            <div>
+              <Nav.Link as={Link} to="/">
+                Login
+              </Nav.Link>
+              <Nav.Link as={Link} to="/error">
+                Network error
+              </Nav.Link>
+            </div>
           )}
         </Nav>
       </Navbar.Collapse>

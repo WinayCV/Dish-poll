@@ -14,28 +14,27 @@ export const NavBar = () => {
     <Navbar bg="light" expand="lg" className="w-100">
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="ml-auto  justify-content-between w-100 d-flex">
+        <Nav className="w-100 justify-content-between align-items-center">
           <span>
-            <h4> Dish Poll</h4>
+            <h4>Dish Poll</h4>
           </span>
-          <span className="justify-content-end d-flex">
-            {localStorage.getItem('user') ? (
+          {localStorage.getItem('user') ? (
+            <div className="d-flex justify-content-end">
               <Nav.Link as={Link} to="/" onClick={handleLogout}>
                 Logout
               </Nav.Link>
-            ) : (
-              <Nav.Link as={Link} to="/">
-                Login
+              <Nav.Link as={Link} to="/dashboard">
+                Dashboard
               </Nav.Link>
-            )}
-
-            <Nav.Link as={Link} to="/dashboard">
-              Dashboard
+              <Nav.Link as={Link} to="/result">
+                Ranking
+              </Nav.Link>
+            </div>
+          ) : (
+            <Nav.Link as={Link} to="/">
+              Login
             </Nav.Link>
-            <Nav.Link as={Link} to="/result">
-              Ranking
-            </Nav.Link>
-          </span>
+          )}
         </Nav>
       </Navbar.Collapse>
     </Navbar>

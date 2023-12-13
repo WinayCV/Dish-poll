@@ -3,10 +3,12 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import {users} from '../userInfo/userInfo';
 import {useNavigate} from 'react-router-dom';
-import {UserContext} from '../App';
+import {DishesContext, UserContext} from '../App';
+import axios from 'axios';
 
 export const Login = () => {
   const {usersDispatch} = useContext(UserContext);
+  const {dishesDispatch} = useContext(DishesContext);
   const [form, setForm] = useState({userName: '', password: ''});
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
@@ -27,7 +29,7 @@ export const Login = () => {
 
     return newErrors;
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (Object.keys(runValidator()).length === 0) {
       const user = users.find((ele) => {
@@ -35,7 +37,10 @@ export const Login = () => {
           ele.username === form.userName &&
           ele.password === form.password
         ) {
-          return ele;
+          return {
+            id: ele.id,
+            username: ele.username,
+          };
         }
       });
       if (!user) {
@@ -43,10 +48,26 @@ export const Login = () => {
         newErrors.userName = 'Invalid user name or password';
         setErrors(newErrors);
       } else {
-        const userInfo = JSON.stringify(user);
-        localStorage.setItem('user', userInfo);
+        const userInfo = {id: user.id, username: user.username};
+        const userInfoString = JSON.stringify(userInfo);
+        console.log(userInfo);
+        localStorage.setItem('user', userInfoString);
+        try {
+          const response = await axios.get(
+            'https://raw.githubusercontent.com/syook/react-dishpoll/main/db.json'
+          );
+          dishesDispatch({
+            type: 'SET_DISHES',
+            payload: response.data,
+          });
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
 
-        usersDispatch({type: 'SET_USER', payload: userInfo});
+        usersDispatch({
+          type: 'SET_USER',
+          payload: JSON.parse(userInfoString),
+        });
         navigate('/dashboard');
         setErrors('');
       }
@@ -59,7 +80,7 @@ export const Login = () => {
           <h1 className="text-center mb-4">Login</h1>
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Email address</Form.Label>
+              <Form.Label>User Name</Form.Label>
               <Form.Control
                 type="username"
                 placeholder="Enter Username"

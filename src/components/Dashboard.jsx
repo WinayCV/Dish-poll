@@ -15,7 +15,7 @@ export const Dashboard = () => {
   const {dishes} = useContext(DishesContext);
 
   const [dishRankInfo, setDishRankInfo] = useState([]);
-
+  console.log(users);
   useEffect(() => {
     (async () => {
       const userObj = JSON.parse(localStorage.getItem('user'));
@@ -61,10 +61,13 @@ export const Dashboard = () => {
   };
 
   const handleSave = () => {
-    localStorage.setItem(
-      `${users.user.username}`,
-      JSON.stringify(dishRankInfo)
-    );
+    console.log('object', users.user.username);
+    if (users.user.username) {
+      localStorage.setItem(
+        `${users.user.username}`,
+        JSON.stringify(dishRankInfo)
+      );
+    }
   };
 
   return (

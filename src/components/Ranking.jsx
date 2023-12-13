@@ -33,25 +33,30 @@ export const Ranking = () => {
     .map((dish) => {
       const points = combinedPoints[dish.id] || 0;
       const choice = user?.find((ele) => ele.dishId === dish.id);
+      console.log(choice);
       return {
         ...dish,
         points,
         choice: choice ? (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            width="24"
-            height="24"
-            className="main-grid-item-icon"
-            fill="none"
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-          >
-            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-            <polyline points="22 4 12 14.01 9 11.01" />
-          </svg>
+          <span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              width="24"
+              height="24"
+              className="main-grid-item-icon"
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+            >
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+              <polyline points="22 4 12 14.01 9 11.01" />
+            </svg>
+            {'   '}
+            Rank{choice.rank}
+          </span>
         ) : (
           <svg
             xmlns="http://www.w3.org/2000/svg"

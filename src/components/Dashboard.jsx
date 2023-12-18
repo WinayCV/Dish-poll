@@ -11,12 +11,10 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import {ToastContainer, toast} from 'react-toastify';
 import {DishesContext, UserContext} from '../App';
-import {useNavigate} from 'react-router-dom';
 
 export const Dashboard = () => {
   const {users} = useContext(UserContext);
   const {dishes} = useContext(DishesContext);
-  const navigate = useNavigate();
 
   const [dishRankInfo, setDishRankInfo] = useState([]);
 
@@ -40,28 +38,52 @@ export const Dashboard = () => {
   };
 
   const handleRankSelect = (dishId, rank) => {
-    setDishRankInfo((prevInfo) => {
-      let updatedInfo = prevInfo.filter(
-        (info) => info.dishId !== dishId
-      );
-
-      if (rank !== 'none') {
-        const rankObj = {
-          dishId,
-          rank: rankPoints[rank].rank,
-          points: rankPoints[rank].points,
-        };
-
-        if (prevInfo.find((info) => info.rank === rankObj.rank)) {
-          updatedInfo = updatedInfo.filter(
-            (info) => info.rank !== rankObj.rank
-          );
-        }
-        updatedInfo.push(rankObj);
+    let updatedInfo = dishRankInfo.filter(
+      (info) => info.dishId !== dishId
+    );
+    console.log(updatedInfo);
+    if (rank !== 'none') {
+      const rankObj = {
+        dishId,
+        rank: rankPoints[rank].rank,
+        points: rankPoints[rank].points,
+      };
+      console.log(rankObj);
+      if (updatedInfo.find((info) => info.rank === rankObj.rank)) {
+        updatedInfo = updatedInfo.filter(
+          (info) => info.rank !== rankObj.rank
+        );
       }
-
-      return updatedInfo;
-    });
+      const existingRankIndex = updatedInfo.findIndex(
+        (info) => info.rank === rankObj.rank
+      );
+      if (existingRankIndex !== -1) {
+        updatedInfo.splice(existingRankIndex, 1);
+      }
+      updatedInfo.push(rankObj);
+      console.log(updatedInfo);
+      setDishRankInfo(updatedInfo);
+    }
+    // setDishRankInfo((prevInfo) => {
+    //   let updatedInfo = prevInfo.filter(
+    //     (info) => info.dishId !== dishId
+    //   );
+    //   console.log(updatedInfo);
+    //   if (rank !== 'none') {
+    //     const rankObj = {
+    //       dishId,
+    //       rank: rankPoints[rank].rank,
+    //       points: rankPoints[rank].points,
+    //     };
+    //     if (prevInfo.find((info) => info.rank === rankObj.rank)) {
+    //       updatedInfo = updatedInfo.filter(
+    //         (info) => info.rank !== rankObj.rank
+    //       );
+    //     }
+    //     updatedInfo.push(rankObj);
+    //   }
+    //   return updatedInfo;
+    // });
   };
 
   const handleSave = () => {

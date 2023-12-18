@@ -16,6 +16,7 @@ export const Ranking = () => {
   userInfo.map((user) => {
     userList.push(user.username);
   });
+  console.log(userList, 'userlist');
   const result = userList.map((user) => {
     return JSON.parse(localStorage.getItem(user));
   });
@@ -23,17 +24,20 @@ export const Ranking = () => {
     if (infoArray) {
       infoArray.forEach((info) => {
         const {dishId, points} = info;
+        console.log(combinedPoints[dishId], dishId);
         combinedPoints[dishId] =
           (combinedPoints[dishId] || 0) + points;
       });
     }
   });
+  console.log(result, 'result');
+  console.log(combinedPoints, 'result');
 
   const newDishesList = dishes.dishesList
     .map((dish) => {
       const points = combinedPoints[dish.id] || 0;
       const choice = user?.find((ele) => ele.dishId === dish.id);
-      console.log(choice);
+      console.log(choice, 'user');
       return {
         ...dish,
         points,
@@ -78,7 +82,7 @@ export const Ranking = () => {
       };
     })
     .sort((a, b) => b.points - a.points);
-
+  console.log(newDishesList, 'new list');
   return (
     <div>
       <h1 className="text-center mt-3">Ranking</h1>

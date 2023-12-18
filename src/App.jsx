@@ -32,9 +32,10 @@ function App() {
 
           if (response.status !== 200) {
             navigate('/error');
-          } else {
-            navigate('/dashboard');
           }
+          // else {
+          //   navigate('/dashboard');
+          // }
         } catch (error) {
           console.error('Error fetching data:', error);
           navigate('/error');
